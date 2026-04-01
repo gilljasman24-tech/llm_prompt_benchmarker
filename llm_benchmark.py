@@ -121,3 +121,60 @@ def run_benchmark(verbose: bool = True) -> pd.DataFrame:
 
     df = pd.DataFrame(results)
     return df
+
+# --- aggregate the results per strategy ---
+
+def analyze(df: pd.DataFrame) -> pd.DataFrame:
+    # roll up per-task results into a single summary row per strategy
+    summary = df.groupby("strategy").agg(
+        avg_accuracy=("accuracy", "mean"),
+        avg_latency=("latency_s", "mean"),
+        total_tokens=("tokens_used", "sum"),
+        total_cost=("estimated_cost_usd", "sum"),
+        tasks_run=("task_id", "count"),
+    ).round(4).reset_index()
+
+    # Efficiency score: accuracy per second of latency
+    summary["efficiency_score"] = (
+        summary["avg_accuracy"] / summary["avg_latency"]
+    ).round(4)
+
+    summary.sort_values("avg_accuracy", ascending=False, inplace=True)
+    summary.reset_index(drop=True, inplace=True)
+    summary.index += 1  # rank starts at 1
+
+    return summary
+
+# --- charts ---
+
+def visualize(df: pd.DataFrame, summary: pd.DataFrame, output_path: str = "benchmark_results.png"):
+    # 4 panel dashboard: accuracy bar, scatter, heatmap, efficiency
+
+    BG      = "#0d1117"
+    PANEL   = "#161b22"
+    BORDER  = "#30363d"
+    WHITE   = "#e6edf3"
+    MUTED   = "#8b949e"
+    COLORS  = ["#58a6ff", "#3fb950", "#f78166", "#d2a8ff"]
+
+    strategies = list(STRATEGIES.keys())
+    color_map = {s: COLORS[i] for i, s in enumerate(strategies)}
+
+    fig = plt.figure(figsize=(18, 11), facecolor=BG)
+    fig.suptitle(
+        "LLM Prompt Strategy Benchmark  ·  Jasman Gill",
+        fontsize=17, fontweight="bold", color=WHITE, y=0.97
+    )
+    subtitle = f"4 strategies  ·  {len(TASKS)} tasks  ·  {datetime.now().strftime('%Y-%m-%d')}"
+    fig.text(0.5, 0.935, subtitle, ha="center", fontsize=10, color=MUTED)
+
+    gs = gridspec.GridSpec(2, 2, figure=fig, hspace=0.48, wspace=0.32,
+                           left=0.07, right=0.97, top=0.90, bottom=0.08)
+
+    def style_ax(ax, title):
+        ax.set_facecolor(PANEL)
+        ax.set_title(title, color=WHITE, fontsize=12, fontweight="bold", pad=10)
+        ax.tick_params(colors=MUTED, labelsize=9)
+        for spine in ax.spines.values():
+            spine.set_color(BORDER)
+        ax.grid(axis="y", color=BORDER, linewidth=0.6, alpha=0.7)
