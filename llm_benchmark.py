@@ -178,3 +178,131 @@ def visualize(df: pd.DataFrame, summary: pd.DataFrame, output_path: str = "bench
         for spine in ax.spines.values():
             spine.set_color(BORDER)
         ax.grid(axis="y", color=BORDER, linewidth=0.6, alpha=0.7)
+
+    # Panel 1: Avg Accuracy by Strategy
+    ax1 = fig.add_subplot(gs[0, 0])
+    style_ax(ax1, "Average Accuracy by Strategy")
+    for i, row in summary.iterrows():
+        s = row["strategy"]
+        bar = ax1.bar(s, row["avg_accuracy"], color=color_map[s],
+                      alpha=0.85, width=0.5, zorder=3)
+        ax1.text(i - 1, row["avg_accuracy"] + 0.005,
+                 f"{row['avg_accuracy']:.1%}",
+                 ha="center", va="bottom", color=WHITE, fontsize=9, fontweight="bold")
+    ax1.set_ylim(0, 1.1)
+    ax1.set_ylabel("Accuracy", color=MUTED, fontsize=9)
+    ax1.set_xticklabels(summary["strategy"], rotation=12, ha="right", color=MUTED)
+    ax1.axhline(0.8, color="#f78166", linewidth=1, linestyle="--", alpha=0.6,
+                label="0.80 threshold")
+    ax1.legend(fontsize=8, labelcolor=WHITE, facecolor=PANEL, edgecolor=BORDER)
+
+    # Panel 2: Accuracy vs Latency scatter
+    ax2 = fig.add_subplot(gs[0, 1])
+    style_ax(ax2, "Accuracy vs Latency (all tasks)")
+    ax2.grid(axis="both", color=BORDER, linewidth=0.6, alpha=0.7)
+
+    for strategy in strategies:
+        sub = df[df["strategy"] == strategy]
+        ax2.scatter(sub["latency_s"], sub["accuracy"],
+                    color=color_map[strategy], alpha=0.7, s=55,
+                    label=strategy, zorder=3, edgecolors="none")
+
+    ax2.set_xlabel("Latency (s)", color=MUTED, fontsize=9)
+    ax2.set_ylabel("Accuracy", color=MUTED, fontsize=9)
+    ax2.legend(fontsize=8, labelcolor=WHITE, facecolor=PANEL,
+               edgecolor=BORDER, loc="lower right")
+
+    # Panel 3: Accuracy by Task Type heatmap
+    ax3 = fig.add_subplot(gs[1, 0])
+    ax3.set_facecolor(PANEL)
+    ax3.set_title("Accuracy Heatmap: Strategy × Task Type",
+                  color=WHITE, fontsize=12, fontweight="bold", pad=10)
+
+    pivot = df.pivot_table(index="strategy", columns="task_type",
+                           values="accuracy", aggfunc="mean")
+    pivot = pivot.reindex(strategies)
+
+    im = ax3.imshow(pivot.values, cmap="Blues", aspect="auto", vmin=0.4, vmax=1.0)
+
+    ax3.set_xticks(range(len(pivot.columns)))
+    ax3.set_yticks(range(len(pivot.index)))
+    ax3.set_xticklabels(pivot.columns, rotation=35, ha="right",
+                        color=MUTED, fontsize=8)
+    ax3.set_yticklabels(pivot.index, color=MUTED, fontsize=8)
+    ax3.tick_params(colors=MUTED)
+    for spine in ax3.spines.values():
+        spine.set_color(BORDER)
+
+    for r in range(pivot.shape[0]):
+        for c in range(pivot.shape[1]):
+            val = pivot.values[r, c]
+            ax3.text(c, r, f"{val:.0%}", ha="center", va="center",
+                     color=WHITE if val > 0.65 else MUTED, fontsize=8, fontweight="bold")
+
+    cbar = plt.colorbar(im, ax=ax3, fraction=0.03, pad=0.02)
+    cbar.ax.tick_params(colors=MUTED, labelsize=7)
+
+    # Panel 4: Efficiency Score (accuracy, latency)
+    ax4 = fig.add_subplot(gs[1, 1])
+    style_ax(ax4, "Efficiency Score (Accuracy ÷ Latency)")
+
+    bars = ax4.barh(summary["strategy"][::-1],
+                    summary["efficiency_score"][::-1],
+                    color=[color_map[s] for s in summary["strategy"][::-1]],
+                    alpha=0.85, height=0.45, zorder=3)
+
+    for bar in bars:
+        w = bar.get_width()
+        ax4.text(w + 0.002, bar.get_y() + bar.get_height() / 2,
+                 f"{w:.3f}", va="center", color=WHITE, fontsize=9, fontweight="bold")
+
+    ax4.set_xlabel("Efficiency (higher = better value)", color=MUTED, fontsize=9)
+    ax4.tick_params(axis="y", colors=MUTED)
+    ax4.grid(axis="x", color=BORDER, linewidth=0.6, alpha=0.7)
+
+    plt.savefig(output_path, dpi=150, bbox_inches="tight", facecolor=BG)
+    plt.close()
+    print(f"\n[✓] Dashboard saved to '{output_path}'")
+
+# --- print a clean results table to terminal ---
+
+def print_summary_table(summary: pd.DataFrame):
+    print("\n" + "═" * 75)
+    print("  BENCHMARK RESULTS SUMMARY")
+    print("═" * 75)
+    print(f"  {'Rank':<5} {'Strategy':<20} {'Accuracy':>10} {'Latency':>10} {'Efficiency':>12} {'Est. Cost':>12}")
+    print("  " + "─" * 70)
+    medals = {1: "🥇", 2: "🥈", 3: "🥉"}
+    for rank, row in summary.iterrows():
+        medal = medals.get(rank, "  ")
+        print(
+            f"  {medal} {rank:<3} {row['strategy']:<20} "
+            f"{row['avg_accuracy']:>9.1%} "
+            f"{row['avg_latency']:>9.2f}s "
+            f"{row['efficiency_score']:>12.4f} "
+            f"${row['total_cost']:>10.4f}"
+        )
+    print("═" * 75)
+    top = summary.iloc[0]
+    print(f"\n  Best overall: {top['strategy']} ({top['avg_accuracy']:.1%} accuracy)")
+    print(f"  Most efficient: {summary.sort_values('efficiency_score', ascending=False).iloc[0]['strategy']}")
+    print()
+
+# --- run it ---
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="LLM Prompt Strategy Benchmarker")
+    parser.add_argument("--quiet", action="store_true", help="Suppress per-task output")
+    parser.add_argument("--output", type=str, default="benchmark_results.png",
+                        help="Output path for dashboard image")
+    args = parser.parse_args()
+
+    df = run_benchmark(verbose=not args.quiet)
+    summary = analyze(df)
+    print_summary_table(summary)
+
+    df.to_csv("benchmark_raw.csv", index=False)
+    print(f"[✓] Raw results saved to 'benchmark_raw.csv'")
+
+    visualize(df, summary, output_path=args.output)
+    print(f"\nDone. Open '{args.output}' to view the dashboard.\n")
