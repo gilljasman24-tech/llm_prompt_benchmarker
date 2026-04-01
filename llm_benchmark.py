@@ -53,3 +53,71 @@ STRATEGIES = {
 
 # harder tasks drag accuracy down, easier ones boost it
 DIFFICULTY_MODIFIER = {"easy": +0.08, "medium": 0.0, "hard": -0.12}
+
+# --- simulation logic ---
+
+def simulate_response(strategy_name: str, task: dict, seed: int) -> dict:
+    # fake a model response for each strategy/task combo
+    # using a fixed seed so results are reproducible
+    rng = np.random.default_rng(seed)
+    strategy = STRATEGIES[strategy_name]
+
+    accuracy = (
+        strategy["base_accuracy"]
+        + DIFFICULTY_MODIFIER[task["difficulty"]]
+        + rng.normal(0, 0.06)
+    )
+    accuracy = float(np.clip(accuracy, 0.0, 1.0))
+
+    latency = strategy["base_latency"] + rng.normal(0, 0.3)
+    latency = float(max(0.2, latency))
+
+    tokens = int(rng.integers(80, 600))
+    cost_per_1k = 0.003  # rough estimate based on Claude Haiku pricing
+    cost = round((tokens / 1000) * cost_per_1k, 6)
+
+    return {
+        "strategy": strategy_name,
+        "task_id": task["id"],
+        "task_type": task["type"],
+        "difficulty": task["difficulty"],
+        "accuracy": round(accuracy, 4),
+        "latency_s": round(latency, 3),
+        "tokens_used": tokens,
+        "estimated_cost_usd": cost,
+    }
+
+
+def run_benchmark(verbose: bool = True) -> pd.DataFrame:
+    # loop every strategy over every task and collect results
+    results = []
+    total = len(STRATEGIES) * len(TASKS)
+    done = 0
+
+    print("\n" + "═" * 55)
+    print("  LLM PROMPT STRATEGY BENCHMARKER")
+    print("═" * 55)
+    print(f"  Strategies : {len(STRATEGIES)}")
+    print(f"  Tasks      : {len(TASKS)}")
+    print(f"  Total runs : {total}")
+    print("═" * 55)
+
+    for strategy_name in STRATEGIES:
+        if verbose:
+            print(f"\n▶ Running: {strategy_name}")
+            print(f"  {STRATEGIES[strategy_name]['description']}")
+
+        for i, task in enumerate(TASKS):
+            seed = hash(f"{strategy_name}{task['id']}") % (2**31)
+            result = simulate_response(strategy_name, task, seed)
+            results.append(result)
+            done += 1
+
+            if verbose:
+                bar = "█" * int(result["accuracy"] * 20) + "░" * (20 - int(result["accuracy"] * 20))
+                print(f"  [{task['id']}] {task['type']:<20} acc={result['accuracy']:.2%}  {bar}")
+
+            time.sleep(0.03)  # small delay so it feels like real API calls
+
+    df = pd.DataFrame(results)
+    return df
