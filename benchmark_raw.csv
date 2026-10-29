@@ -1,0 +1,318 @@
+strategy,task_id,task_type,difficulty,accuracy,latency_s,input_tokens,output_tokens,tokens_used,cost_usd,stop_reason,refused,refusal_category,answer
+Zero-Shot,T01,Summarization,easy,1.0,2.225,189,122,311,0.003196,end_turn,False,,"Northwind Supplies grew Q3 revenue 12% over Q2 to $4.2 million, driven mainly by its new online store, while higher shipping rates pushed operating costs up 5% and net profit reached $610,000. For Q4, the company expects revenue of $4.5–$4.8 million and plans to hire 6 warehouse staff."
+Zero-Shot,T01,Summarization,easy,1.0,1.868,189,123,312,0.003216,end_turn,False,,"Northwind Supplies posted Q3 revenue of $4.2 million, up 12% from Q2 and driven mainly by its new online store, while operating costs rose 5% on higher shipping rates and net profit came in at $610,000. The company expects Q4 revenue of $4.5–$4.8 million and plans to hire 6 warehouse staff."
+Zero-Shot,T01,Summarization,easy,1.0,1.965,189,124,313,0.003236,end_turn,False,,"Northwind Supplies grew Q3 revenue 12% over Q2 to $4.2 million, driven mainly by its new online store, while higher shipping rates pushed operating costs up 5%, and net profit came in at $610,000. For Q4, the company expects revenue of $4.5–$4.8 million and plans to hire 6 warehouse staff."
+Zero-Shot,T02,Classification,medium,1.0,2.195,200,46,246,0.00172,end_turn,False,,high
+Zero-Shot,T02,Classification,medium,1.0,1.705,200,50,250,0.0018,end_turn,False,,high
+Zero-Shot,T02,Classification,medium,1.0,1.931,200,72,272,0.00224,end_turn,False,,high
+Zero-Shot,T03,Data Extraction,hard,1.0,3.658,236,316,552,0.007264,end_turn,False,,"{""invoice_number"": ""INV-20931"", ""vendor"": ""Harbour Lane Printing Co."", ""issue_date"": ""2026-09-03"", ""due_date"": ""2026-10-03"", ""total"": 609.00}"
+Zero-Shot,T03,Data Extraction,hard,1.0,3.481,236,283,519,0.006604,end_turn,False,,"```json
+{
+  ""invoice_number"": ""INV-20931"",
+  ""vendor"": ""Harbour Lane Printing Co."",
+  ""issue_date"": ""2026-09-03"",
+  ""due_date"": ""2026-10-03"",
+  ""total"": 609.00
+}
+```"
+Zero-Shot,T03,Data Extraction,hard,1.0,3.597,236,301,537,0.006964,end_turn,False,,"```json
+{
+  ""invoice_number"": ""INV-20931"",
+  ""vendor"": ""Harbour Lane Printing Co."",
+  ""issue_date"": ""2026-09-03"",
+  ""due_date"": ""2026-10-03"",
+  ""total"": 609.00
+}
+```"
+Zero-Shot,T04,Sentiment Analysis,easy,1.0,1.45,118,68,186,0.001832,end_turn,False,,negative
+Zero-Shot,T04,Sentiment Analysis,easy,1.0,1.529,118,71,189,0.001892,end_turn,False,,negative
+Zero-Shot,T04,Sentiment Analysis,easy,1.0,1.622,118,75,193,0.001972,end_turn,False,,negative
+Zero-Shot,T05,Code Generation,hard,1.0,2.065,177,150,327,0.003708,end_turn,False,,"SELECT c.name
+FROM customers c
+JOIN orders o ON o.customer_id = c.id
+WHERE c.city = 'Calgary'
+  AND o.status = 'completed'
+  AND o.order_date >= '2026-01-01'
+  AND o.order_date < '2027-01-01'
+GROUP BY c.id, c.name
+ORDER BY SUM(o.total) DESC
+LIMIT 1;"
+Zero-Shot,T05,Code Generation,hard,1.0,1.999,177,150,327,0.003708,end_turn,False,,"SELECT c.name
+FROM customers c
+JOIN orders o ON o.customer_id = c.id
+WHERE c.city = 'Calgary'
+  AND o.status = 'completed'
+  AND o.order_date >= '2026-01-01'
+  AND o.order_date < '2027-01-01'
+GROUP BY c.id, c.name
+ORDER BY SUM(o.total) DESC
+LIMIT 1;"
+Zero-Shot,T05,Code Generation,hard,1.0,1.973,177,150,327,0.003708,end_turn,False,,"SELECT c.name
+FROM customers c
+JOIN orders o ON o.customer_id = c.id
+WHERE c.city = 'Calgary'
+  AND o.status = 'completed'
+  AND o.order_date >= '2026-01-01'
+  AND o.order_date < '2027-01-01'
+GROUP BY c.id, c.name
+ORDER BY SUM(o.total) DESC
+LIMIT 1;"
+Zero-Shot,T06,Summarization,medium,1.0,2.876,228,173,401,0.004372,end_turn,False,,"- **Schedule (starts January 1, 2027):** Eligible roles can work remotely up to 2 days per week. You must be in the office the other 3 days, and every Tuesday is required for team meetings.
+- **Fully remote:** You need written approval from your manager, and the arrangement is reviewed every 6 month"
+Zero-Shot,T06,Summarization,medium,1.0,2.178,228,175,403,0.004412,end_turn,False,,"- **Schedule (starts Jan 1, 2027):** Eligible roles can work remotely up to 2 days per week. You must be in the office the other 3 days, and every Tuesday is required for team meetings.
+- **Fully remote:** You need written manager approval, and the arrangement is reviewed every 6 months.
+- **$500 st"
+Zero-Shot,T06,Summarization,medium,1.0,2.3,228,178,406,0.004472,end_turn,False,,"- **Schedule (from Jan 1, 2027):** Eligible roles can work remotely up to 2 days a week. You must be in the office the other 3 days, and one of them must be Tuesday for team meetings.
+- **Fully remote:** You need written approval from your manager, and the arrangement is reviewed every 6 months.
+- *"
+Zero-Shot,T07,Classification,easy,1.0,1.97,111,37,148,0.001184,end_turn,False,,billing
+Zero-Shot,T07,Classification,easy,1.0,1.923,111,37,148,0.001184,end_turn,False,,billing
+Zero-Shot,T07,Classification,easy,1.0,2.157,111,52,163,0.001484,end_turn,False,,billing
+Zero-Shot,T08,Data Extraction,medium,1.0,2.166,170,200,370,0.00468,end_turn,False,,"2026-03-01
+2027-02-28
+2026-02-15
+$2,150
+$1,075
+$75"
+Zero-Shot,T08,Data Extraction,medium,1.0,2.15,170,201,371,0.0047,end_turn,False,,"2026-03-01
+2027-02-28
+$2,150
+$1,075
+2026-02-15
+$75"
+Zero-Shot,T08,Data Extraction,medium,1.0,2.142,170,207,377,0.00482,end_turn,False,,"2026-03-01
+2027-02-28
+2026-02-15
+$2,150
+$1,075
+$75"
+Zero-Shot,T09,Reasoning,hard,1.0,3.551,364,226,590,0.005976,end_turn,False,,The export_all_orders report job exhausting the DB connection pool
+Zero-Shot,T09,Reasoning,hard,1.0,3.429,364,237,601,0.006196,end_turn,False,,The export_all_orders report job exhausting the DB connection pool
+Zero-Shot,T09,Reasoning,hard,1.0,2.616,364,199,563,0.005436,end_turn,False,,The export_all_orders report job exhausting the DB connection pool
+Zero-Shot,T10,Reasoning,medium,1.0,3.822,183,340,523,0.007532,end_turn,False,,West
+Zero-Shot,T10,Reasoning,medium,1.0,2.658,183,187,370,0.004472,end_turn,False,,West
+Zero-Shot,T10,Reasoning,medium,1.0,3.081,183,97,280,0.002672,end_turn,False,,West
+Few-Shot,T01,Summarization,easy,1.0,2.362,488,217,705,0.006292,end_turn,False,,"Northwind Supplies posted $4.2 million in Q3 revenue (up 12%, driven by its new online store) and $610,000 net profit, despite 5% higher operating costs from shipping rates. It expects $4.5–$4.8 million in Q4 revenue and plans to hire 6 warehouse staff."
+Few-Shot,T01,Summarization,easy,1.0,3.542,488,225,713,0.006452,end_turn,False,,"Northwind Supplies posted $4.2 million in Q3 revenue (up 12% from Q2), driven by its new online store, and $610,000 net profit despite 5% higher operating costs from shipping rates. It expects Q4 revenue of $4.5 to $4.8 million and plans to hire 6 warehouse staff."
+Few-Shot,T01,Summarization,easy,1.0,2.073,488,121,609,0.004372,end_turn,False,,"Northwind Supplies posted $4.2 million in Q3 revenue (up 12% from Q2, driven mainly by its new online store) and $610,000 net profit, despite operating costs rising 5% on higher shipping rates. It expects Q4 revenue of $4.5–$4.8 million and plans to hire 6 warehouse staff."
+Few-Shot,T02,Classification,medium,1.0,2.192,283,89,372,0.002912,end_turn,False,,high
+Few-Shot,T02,Classification,medium,1.0,2.044,283,106,389,0.003252,end_turn,False,,high
+Few-Shot,T02,Classification,medium,1.0,2.083,283,87,370,0.002872,end_turn,False,,high
+Few-Shot,T03,Data Extraction,hard,1.0,3.511,484,321,805,0.008356,end_turn,False,,"{""invoice_number"": ""INV-20931"", ""vendor"": ""Harbour Lane Printing Co."", ""issue_date"": ""2026-09-03"", ""due_date"": ""2026-10-03"", ""total"": 609.00}"
+Few-Shot,T03,Data Extraction,hard,1.0,3.243,484,261,745,0.007156,end_turn,False,,"{""invoice_number"": ""INV-20931"", ""vendor"": ""Harbour Lane Printing Co."", ""issue_date"": ""2026-09-03"", ""due_date"": ""2026-10-03"", ""total"": 609.00}"
+Few-Shot,T03,Data Extraction,hard,1.0,2.902,484,247,731,0.006876,end_turn,False,,"{""invoice_number"": ""INV-20931"", ""vendor"": ""Harbour Lane Printing Co."", ""issue_date"": ""2026-09-03"", ""due_date"": ""2026-10-03"", ""total"": 609.00}"
+Few-Shot,T04,Sentiment Analysis,easy,1.0,2.558,197,75,272,0.002288,end_turn,False,,negative
+Few-Shot,T04,Sentiment Analysis,easy,1.0,1.539,197,56,253,0.001908,end_turn,False,,negative
+Few-Shot,T04,Sentiment Analysis,easy,1.0,1.647,197,75,272,0.002288,end_turn,False,,negative
+Few-Shot,T05,Code Generation,hard,1.0,1.899,327,136,463,0.004028,end_turn,False,,"SELECT c.name FROM customers c JOIN orders o ON o.customer_id = c.id WHERE c.city = 'Calgary' AND o.status = 'completed' AND o.order_date >= '2026-01-01' AND o.order_date < '2027-01-01' GROUP BY c.id, c.name ORDER BY SUM(o.total) DESC LIMIT 1"
+Few-Shot,T05,Code Generation,hard,1.0,1.854,327,136,463,0.004028,end_turn,False,,"SELECT c.name FROM customers c JOIN orders o ON c.id = o.customer_id WHERE c.city = 'Calgary' AND o.status = 'completed' AND o.order_date >= '2026-01-01' AND o.order_date < '2027-01-01' GROUP BY c.id, c.name ORDER BY SUM(o.total) DESC LIMIT 1"
+Few-Shot,T05,Code Generation,hard,1.0,1.976,327,136,463,0.004028,end_turn,False,,"SELECT c.name FROM customers c JOIN orders o ON c.id = o.customer_id WHERE c.city = 'Calgary' AND o.status = 'completed' AND o.order_date >= '2026-01-01' AND o.order_date < '2027-01-01' GROUP BY c.id, c.name ORDER BY SUM(o.total) DESC LIMIT 1"
+Few-Shot,T06,Summarization,medium,1.0,1.653,427,124,551,0.004188,end_turn,False,,"- From January 1, 2027: eligible roles can work remotely up to 2 days a week and must be in the office 3 days, including every Tuesday
+- Fully remote work needs written manager approval and is reviewed every 6 months
+- One-time $500 home office stipend: claim it in the expense system within 90 days "
+Few-Shot,T06,Summarization,medium,1.0,1.718,427,129,556,0.004288,end_turn,False,,"- From January 1, 2027: eligible roles can work remotely up to 2 days a week and must be in the office 3 days, including every Tuesday
+- Fully remote work needs written manager approval and is reviewed every 6 months
+- One-time $500 home office stipend: claim it in the expense system within 90 days "
+Few-Shot,T06,Summarization,medium,1.0,1.834,427,129,556,0.004288,end_turn,False,,"- From January 1, 2027: eligible roles may work remotely up to 2 days a week and must be in the office 3 days, including every Tuesday
+- Fully remote work needs written manager approval and is reviewed every 6 months
+- One-time $500 home office stipend: claim it in the expense system within 90 days "
+Few-Shot,T07,Classification,easy,1.0,1.205,191,37,228,0.001504,end_turn,False,,billing
+Few-Shot,T07,Classification,easy,1.0,0.982,191,24,215,0.001244,end_turn,False,,billing
+Few-Shot,T07,Classification,easy,1.0,0.882,191,10,201,0.000964,end_turn,False,,billing
+Few-Shot,T08,Data Extraction,medium,1.0,2.474,291,223,514,0.005624,end_turn,False,,"2026-03-01
+2027-02-28
+2026-02-15
+$2150
+$1075
+$75"
+Few-Shot,T08,Data Extraction,medium,1.0,2.374,291,210,501,0.005364,end_turn,False,,"2026-03-01
+2027-02-28
+2026-02-15
+$2150
+$1075
+$75"
+Few-Shot,T08,Data Extraction,medium,1.0,3.244,291,308,599,0.007324,end_turn,False,,"2026-03-01
+2027-02-28
+2026-02-15
+$2150
+$1075
+$75"
+Few-Shot,T09,Reasoning,hard,1.0,4.418,559,354,913,0.009316,end_turn,False,,the export_all_orders report job (holding 30 DB connections and exhausting the pool)
+Few-Shot,T09,Reasoning,hard,1.0,3.667,559,223,782,0.006696,end_turn,False,,the export_all_orders report job (worker) using up the DB connection pool
+Few-Shot,T09,Reasoning,hard,1.0,5.226,559,434,993,0.010916,end_turn,False,,the export_all_orders report job (holding 30 connections and exhausting the db pool)
+Few-Shot,T10,Reasoning,medium,1.0,3.399,343,355,698,0.008472,end_turn,False,,West
+Few-Shot,T10,Reasoning,medium,1.0,2.846,343,290,633,0.007172,end_turn,False,,West
+Few-Shot,T10,Reasoning,medium,1.0,3.048,343,332,675,0.008012,end_turn,False,,West
+Chain-of-Thought,T01,Summarization,easy,0.0,1.025,215,30,245,0.00146,refusal,True,reasoning_extraction,
+Chain-of-Thought,T01,Summarization,easy,0.0,2.795,215,172,387,0.0043,refusal,True,reasoning_extraction,"**Step 1: Key numbers and facts**
+- Q3 revenue: $4.2 million, up 12% from Q2, driven mainly by the new online store
+- Operating costs: up 5%, due to higher shipping rates
+- Net profit: $610,000
+- Q4 revenue guidance: $4.5 to $4.8 million
+- Hiring plan: 6 warehouse staff
+
+**"
+Chain-of-Thought,T01,Summarization,easy,1.0,3.691,215,349,564,0.00784,end_turn,False,,"Northwind Supplies grew Q3 revenue 12% from Q2 to $4.2 million, mainly through its new online store, while higher shipping rates pushed operating costs up 5%, leaving net profit at $610,000. For Q4, the company expects revenue of $4.5–$4.8 million and plans to hire 6 warehouse staff."
+Chain-of-Thought,T02,Classification,medium,1.0,4.396,226,248,474,0.005864,end_turn,False,,high
+Chain-of-Thought,T02,Classification,medium,1.0,4.548,226,360,586,0.008104,end_turn,False,,high
+Chain-of-Thought,T02,Classification,medium,1.0,3.844,226,284,510,0.006584,end_turn,False,,high
+Chain-of-Thought,T03,Data Extraction,hard,1.0,6.039,262,594,856,0.012928,end_turn,False,,"```json
+{
+  ""invoice_number"": ""INV-20931"",
+  ""vendor"": ""Harbour Lane Printing Co."",
+  ""issue_date"": ""2026-09-03"",
+  ""due_date"": ""2026-10-03"",
+  ""total"": 609.00
+}
+```"
+Chain-of-Thought,T03,Data Extraction,hard,1.0,5.598,262,585,847,0.012748,end_turn,False,,"```json
+{
+  ""invoice_number"": ""INV-20931"",
+  ""vendor"": ""Harbour Lane Printing Co."",
+  ""issue_date"": ""2026-09-03"",
+  ""due_date"": ""2026-10-03"",
+  ""total"": 609.00
+}
+```"
+Chain-of-Thought,T03,Data Extraction,hard,1.0,5.974,262,595,857,0.012948,end_turn,False,,"```json
+{
+  ""invoice_number"": ""INV-20931"",
+  ""vendor"": ""Harbour Lane Printing Co."",
+  ""issue_date"": ""2026-09-03"",
+  ""due_date"": ""2026-10-03"",
+  ""total"": 609.00
+}
+```"
+Chain-of-Thought,T04,Sentiment Analysis,easy,1.0,3.633,144,226,370,0.005096,end_turn,False,,negative
+Chain-of-Thought,T04,Sentiment Analysis,easy,1.0,4.97,144,378,522,0.008136,end_turn,False,,negative
+Chain-of-Thought,T04,Sentiment Analysis,easy,1.0,3.573,144,237,381,0.005316,end_turn,False,,negative
+Chain-of-Thought,T05,Code Generation,hard,0.0,1.646,203,33,236,0.001472,refusal,True,reasoning_extraction,
+Chain-of-Thought,T05,Code Generation,hard,0.0,1.77,203,56,259,0.001932,refusal,True,reasoning_extraction,
+Chain-of-Thought,T05,Code Generation,hard,0.0,1.903,203,62,265,0.002052,refusal,True,reasoning_extraction,
+Chain-of-Thought,T06,Summarization,medium,1.0,4.631,254,412,666,0.009256,end_turn,False,,"- **Schedule (from Jan 1, 2027):** Eligible roles can work remotely up to 2 days a week and must be in the office 3 days, including every Tuesday for team meetings.
+- **Fully remote:** Requires written manager approval and is reviewed every 6 months.
+- **Home office stipend:** A one-time $500, claim"
+Chain-of-Thought,T06,Summarization,medium,0.0,1.12,254,0,254,0.001016,refusal,True,reasoning_extraction,
+Chain-of-Thought,T06,Summarization,medium,0.0,1.124,254,0,254,0.001016,refusal,True,reasoning_extraction,
+Chain-of-Thought,T07,Classification,easy,1.0,3.992,137,271,408,0.005968,end_turn,False,,billing
+Chain-of-Thought,T07,Classification,easy,1.0,2.868,137,170,307,0.003948,end_turn,False,,billing
+Chain-of-Thought,T07,Classification,easy,1.0,3.889,137,252,389,0.005588,end_turn,False,,billing
+Chain-of-Thought,T08,Data Extraction,medium,1.0,4.213,196,381,577,0.008404,end_turn,False,,"2026-03-01
+2027-02-28
+$2,150
+$1,075
+2026-02-15
+$75"
+Chain-of-Thought,T08,Data Extraction,medium,1.0,4.388,196,424,620,0.009264,end_turn,False,,"2026-03-01
+2027-02-28
+$2,150
+$1,075
+2026-02-15
+$75"
+Chain-of-Thought,T08,Data Extraction,medium,1.0,4.412,196,403,599,0.008844,end_turn,False,,"2026-03-01
+2027-02-28
+$2,150
+$1,075
+2026-02-15
+$75"
+Chain-of-Thought,T09,Reasoning,hard,0.0,1.322,390,37,427,0.0023,refusal,True,reasoning_extraction,
+Chain-of-Thought,T09,Reasoning,hard,1.0,6.25,390,532,922,0.0122,end_turn,False,,"The worker's `export_all_orders` report job, which exhausted the shared DB connection pool."
+Chain-of-Thought,T09,Reasoning,hard,1.0,5.611,390,512,902,0.0118,end_turn,False,,The `export_all_orders` report job exhausting the DB connection pool.
+Chain-of-Thought,T10,Reasoning,medium,1.0,4.622,209,430,639,0.009436,end_turn,False,,West
+Chain-of-Thought,T10,Reasoning,medium,1.0,4.492,209,378,587,0.008396,end_turn,False,,West
+Chain-of-Thought,T10,Reasoning,medium,1.0,4.109,209,370,579,0.008236,end_turn,False,,West
+Role + CoT,T01,Summarization,easy,0.0,1.332,227,0,227,0.000908,refusal,True,reasoning_extraction,
+Role + CoT,T01,Summarization,easy,0.0,3.073,227,180,407,0.004508,refusal,True,reasoning_extraction,**
+Role + CoT,T01,Summarization,easy,0.0,2.268,227,81,308,0.002528,refusal,True,reasoning_extraction,"Key numbers to keep:
+- Q3 revenue: $4.2 million, up 12% from Q2, driven by the new online store.
+- Operating costs: up 5%, due to higher shipping rates.
+- Net profit: $610,000.
+-"
+Role + CoT,T02,Classification,medium,1.0,3.471,236,290,526,0.006744,end_turn,False,,high
+Role + CoT,T02,Classification,medium,1.0,3.786,236,342,578,0.007784,end_turn,False,,high
+Role + CoT,T02,Classification,medium,1.0,3.779,236,317,553,0.007284,end_turn,False,,high
+Role + CoT,T03,Data Extraction,hard,1.0,5.445,275,595,870,0.013,end_turn,False,,"```json
+{
+  ""invoice_number"": ""INV-20931"",
+  ""vendor"": ""Harbour Lane Printing Co."",
+  ""issue_date"": ""2026-09-03"",
+  ""due_date"": ""2026-10-03"",
+  ""total"": 609.00
+}
+```"
+Role + CoT,T03,Data Extraction,hard,1.0,5.653,275,593,868,0.01296,end_turn,False,,"```json
+{
+  ""invoice_number"": ""INV-20931"",
+  ""vendor"": ""Harbour Lane Printing Co."",
+  ""issue_date"": ""2026-09-03"",
+  ""due_date"": ""2026-10-03"",
+  ""total"": 609.00
+}
+```"
+Role + CoT,T03,Data Extraction,hard,1.0,5.807,275,599,874,0.01308,end_turn,False,,"```json
+{
+  ""invoice_number"": ""INV-20931"",
+  ""vendor"": ""Harbour Lane Printing Co."",
+  ""issue_date"": ""2026-09-03"",
+  ""due_date"": ""2026-10-03"",
+  ""total"": 609.00
+}
+```"
+Role + CoT,T04,Sentiment Analysis,easy,1.0,3.496,156,218,374,0.004984,end_turn,False,,negative
+Role + CoT,T04,Sentiment Analysis,easy,1.0,4.44,156,251,407,0.005644,end_turn,False,,negative
+Role + CoT,T04,Sentiment Analysis,easy,1.0,4.044,156,294,450,0.006504,end_turn,False,,negative
+Role + CoT,T05,Code Generation,hard,1.0,5.121,214,469,683,0.010236,end_turn,False,,"```sql
+SELECT c.name
+FROM customers c
+JOIN orders o ON o.customer_id = c.id
+WHERE c.city = 'Calgary'
+  AND o.status = 'completed'
+  AND o.order_date >= '2026-01-01'
+  AND o.order_date <  '2027-01-01'
+GROUP BY c.id, c.name
+ORDER BY SUM(o.total) DESC
+LIMIT 1;
+```"
+Role + CoT,T05,Code Generation,hard,0.0,4.193,214,54,268,0.001936,refusal,True,reasoning_extraction,
+Role + CoT,T05,Code Generation,hard,1.0,6.03,214,563,777,0.012116,end_turn,False,,"```sql
+SELECT c.name
+FROM customers c
+JOIN orders o ON o.customer_id = c.id
+WHERE c.city = 'Calgary'
+  AND o.status = 'completed'
+  AND o.order_date >= '2026-01-01'
+  AND o.order_date < '2027-01-01'
+GROUP BY c.id, c.name
+ORDER BY SUM(o.total) DESC
+LIMIT 1;
+```"
+Role + CoT,T06,Summarization,medium,0.0,1.318,266,0,266,0.001064,refusal,True,reasoning_extraction,
+Role + CoT,T06,Summarization,medium,0.0,1.469,266,0,266,0.001064,refusal,True,reasoning_extraction,
+Role + CoT,T06,Summarization,medium,0.0,1.401,266,0,266,0.001064,refusal,True,reasoning_extraction,
+Role + CoT,T07,Classification,easy,1.0,3.201,150,223,373,0.00506,end_turn,False,,billing
+Role + CoT,T07,Classification,easy,1.0,2.983,150,192,342,0.00444,end_turn,False,,billing
+Role + CoT,T07,Classification,easy,1.0,2.883,150,178,328,0.00416,end_turn,False,,billing
+Role + CoT,T08,Data Extraction,medium,1.0,4.443,205,402,607,0.00886,end_turn,False,,"2026-03-01
+2027-02-28
+2026-02-15
+$2,150
+$1,075
+$75"
+Role + CoT,T08,Data Extraction,medium,1.0,5.249,205,447,652,0.00976,end_turn,False,,"2026-03-01
+2027-02-28
+$2,150
+$1,075
+2026-02-15
+$75"
+Role + CoT,T08,Data Extraction,medium,1.0,4.915,205,446,651,0.00974,end_turn,False,,"2026-03-01
+2027-02-28
+2026-02-15
+$2,150
+$1,075
+$75"
+Role + CoT,T09,Reasoning,hard,0.0,1.06,402,0,402,0.001608,refusal,True,reasoning_extraction,
+Role + CoT,T09,Reasoning,hard,1.0,5.992,402,560,962,0.012808,end_turn,False,,The `export_all_orders` report job in the worker exhausted the shared DB connection pool.
+Role + CoT,T09,Reasoning,hard,0.0,1.227,402,26,428,0.002128,refusal,True,reasoning_extraction,
+Role + CoT,T10,Reasoning,medium,1.0,4.46,222,355,577,0.007988,end_turn,False,,West
+Role + CoT,T10,Reasoning,medium,1.0,4.557,222,443,665,0.009748,end_turn,False,,West
+Role + CoT,T10,Reasoning,medium,1.0,4.47,222,396,618,0.008808,end_turn,False,,West
